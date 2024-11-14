@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ibnu Archive</title>
+
+    <!-- Link ke Tailwind dan Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <!-- Background Gambar -->
+    <div class="background"></div>
+    <div class="login-container text-center text-white">
+      <h2 class="text-2xl mb-6">Hey Ibnu!</h2>
+      <form id="loginForm">
+        <div class="mb-4 relative">
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            class="w-full px-4 py-2"
+          />
+          <i class="fas fa-envelope absolute right-4 top-3 text-white"></i>
+        </div>
+        <div class="mb-4 relative">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            class="w-full px-4 py-2"
+          />
+          <i class="fas fa-lock absolute right-4 top-3 text-white"></i>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-2" />
+            Remember me
+          </label>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-white text-purple-700 py-2 rounded-full"
+        >
+          Login
+        </button>
+      </form>
+      <p class="mt-4">
+        Forgot Password? <a href="#" class="underline">Click Here</a>
+      </p>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="popupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden opacity-0 transition-opacity duration-500 ease-in-out">
+      <div class="bg-white p-6 rounded-lg opacity-0 transform scale-75 transition-all duration-500 ease-in-out">
+        <h3 class="text-xl font-semibold">Login Berhasil!</h3>
+        <p>Selamat belajar ya sayang!.</p>
+        <button id="closePopup" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full">Ok</button>
+      </div>
+    </div>
+
+    <!-- JavaScript untuk login -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah reload halaman
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "ibnusz" && password === "anjaymabar") {
+              // Menampilkan pop-up notifikasi login berhasil
+              const popupModal = document.getElementById("popupModal");
+              const modalContent = popupModal.querySelector("div");
+
+              // Menghapus kelas hidden dan menambahkan animasi masuk
+              popupModal.classList.remove("hidden");
+              popupModal.classList.add("opacity-100");
+              modalContent.classList.remove("opacity-0", "scale-75");
+              modalContent.classList.add("opacity-100", "scale-100");
+
+              // Menunggu hingga pop-up ditutup dan lalu mengarahkan ke halaman lain
+              document.getElementById("closePopup").addEventListener("click", function() {
+                // Menambahkan animasi keluar sebelum menghilangkan pop-up
+                modalContent.classList.add("opacity-0", "scale-75");
+                popupModal.classList.add("opacity-0");
+                
+                // Setelah animasi selesai, sembunyikan modal dan arahkan ke halaman
+                setTimeout(function() {
+                  popupModal.classList.add("hidden");
+                  window.location.href = "https://sites.google.com/view/ibnuarchive/";
+                }, 500); // Waktu animasi (sama dengan durasi animasi)
+              });
+            } else {
+              alert("Username atau password salah!");
+            }
+          });
+      });
+    </script>
+
+    <!-- Notification Script -->
+    <script>
+      // Fungsi untuk menjadwalkan notifikasi
+      function scheduleNotification(time, message) {
+        const now = new Date();
+        const targetTime = new Date();
+        targetTime.setHours(time.hours, time.minutes, 0, 0);
+        const timeDifference = targetTime - now;
+
+        if (timeDifference > 0) {
+          setTimeout(() => {
+            new Notification("Reminder Kuliah", { body: message });
+          }, timeDifference);
+        }
+      }
+
+      // Jadwal Kuliah Berdasarkan Hari
+      const scheduleByDay = {
+        "Monday": [
+          { time: { hours: 7, minutes: 0 }, message: "Persiapkan diri untuk kelas Dasar Pemrograman dalam 30 menit (07:30). Pastikan peralatan siap." },
+          { time: { hours: 7, minutes: 20 }, message: "Saatnya masuk aplikasi untuk kelas Dasar Pemrograman yang dimulai pukul 07:30." },
+          { time: { hours: 7, minutes: 30 }, message: "Kelas Dasar Pemrograman telah dimulai! Silakan masuk kelas." },
+          { time: { hours: 12, minutes: 0 }, message: "Persiapkan diri untuk kelas Pendidikan Pancasila dalam 30 menit (12:30). Pastikan Anda siap untuk sesi online." },
+          { time: { hours: 12, minutes: 20 }, message: "Saatnya masuk aplikasi untuk kelas Pendidikan Pancasila yang dimulai pukul 12:30." },
+          { time: { hours: 12, minutes: 30 }, message: "Kelas Pendidikan Pancasila telah dimulai! Silakan masuk sesi online." }
+        ],
+        "Tuesday": [
+          { time: { hours: 13, minutes: 40 }, message: "Persiapkan diri untuk kelas Entrepreneurship dalam 30 menit (14:10)." },
+          { time: { hours: 14, minutes: 0 }, message: "Saatnya masuk aplikasi untuk kelas Entrepreneurship yang dimulai pukul 14:10." },
+          { time: { hours: 14, minutes: 10 }, message: "Kelas Entrepreneurship telah dimulai! Silakan masuk kelas." }
+        ],
+        "Wednesday": [
+          { time: { hours: 7, minutes: 50 }, message: "Persiapkan diri untuk kelas Pengantar Teknologi Informasi dalam 30 menit (08:20)." },
+          { time: { hours: 8, minutes: 10 }, message: "Saatnya masuk aplikasi untuk kelas Pengantar Teknologi Informasi yang dimulai pukul 08:20." },
+          { time: { hours: 8, minutes: 20 }, message: "Kelas Pengantar Teknologi Informasi telah dimulai! Silakan masuk kelas." },
+          { time: { hours: 13, minutes: 40 }, message: "Persiapkan diri untuk kelas Bahasa Inggris I dalam 30 menit (14:10)." },
+          { time: { hours: 14, minutes: 0 }, message: "Saatnya masuk aplikasi untuk kelas Bahasa Inggris I yang dimulai pukul 14:10." },
+          { time: { hours: 14, minutes: 10 }, message: "Kelas Bahasa Inggris I telah dimulai! Silakan masuk kelas." }
+        ],
+        "Friday": [
+          { time: { hours: 7, minutes: 50 }, message: "Persiapkan diri untuk kelas Logika & Algoritma dalam 30 menit (08:20)." },
+          { time: { hours: 8, minutes: 10 }, message: "Saatnya masuk aplikasi untuk kelas Logika & Algoritma yang dimulai pukul 08:20." },
+          { time: { hours: 8, minutes: 20 }, message: "Kelas Logika & Algoritma telah dimulai! Silakan masuk kelas." }
+        ]
+      };
+
+      // Cek Hari Ini dan Set Notifikasi
+      const today = new Date().toLocaleString("en-US", { weekday: "long" });
+      const todaySchedule = scheduleByDay[today];
+
+      if (Notification.permission === "granted") {
+        if (todaySchedule && todaySchedule.length > 0) {
+          todaySchedule.forEach(schedule => scheduleNotification(schedule.time, schedule.message));
+        } else {
+          new Notification("Pengingat Kuliah", { body: "Hari ini tidak ada jadwal kuliah. Manfaatkan waktu untuk belajar mandiri. Semangat!" });
+        }
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            if (todaySchedule && todaySchedule.length > 0) {
+              todaySchedule.forEach(schedule => scheduleNotification(schedule.time, schedule.message));
+            } else {
+              new Notification("Pengingat Kuliah", { body: "Hari ini tidak ada jadwal kuliah. Manfaatkan waktu untuk belajar mandiri. Semangat!" });
+            }
+          }
+        });
+      }
+    </script>
+
+    <!-- Intergram Live Chat Script -->
+    <script>
+      window.intergramId = "7017140645";
+      window.intergramCustomizations = {
+        titleClosed: "Butuh bantuan?",
+        titleOpen: "Ibnusz Live Chat",
+        introMessage: "Woi lu ada masalah apaan?",
+        autoResponse: "Ntar gue bales ya, sabar...",
+        mainColor: "#0000FF",
+        alwaysUseFloatingButton: true,
+      };
+    </script>
+    <script async src="https://www.intergram.xyz/js/widget.js"></script>
+  </body>
+</html>
